@@ -1,0 +1,34 @@
+{
+  "air_gapped": {
+    "candidate_count": 3,
+    "distractor_count": 0,
+    "filtered_low_trust": 20,
+    "max_trust": 0.98,
+    "mean_trust": 0.946667,
+    "min_trust": 0.92,
+    "mode": "air-gapped",
+    "pretraining_guess_count": 0,
+    "trusted_count": 3,
+    "unverified_count": 0
+  },
+  "delta": {
+    "candidates_exposed": 25,
+    "distractors_exposed": 20,
+    "mean_trust_drop": 0.497738,
+    "pretraining_guesses_exposed": 5,
+    "unverified_exposed": 25
+  },
+  "trust_threshold": 0.7,
+  "uncurated": {
+    "candidate_count": 28,
+    "distractor_count": 20,
+    "filtered_low_trust": 0,
+    "max_trust": 0.98,
+    "mean_trust": 0.448929,
+    "min_trust": 0.0,
+    "mode": "online",
+    "pretraining_guess_count": 5,
+    "trusted_count": 3,
+    "unverified_count": 25
+  }
+}

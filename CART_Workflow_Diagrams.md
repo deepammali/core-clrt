@@ -267,7 +267,7 @@ How any state-changing action is routed. The deck lists HITL approvals as mandat
 ```mermaid
 flowchart TD
   ACT["Proposed action"] --> TIER{"autonomy tier"}
-  TIER -->|T0 automated| RO{"read-only"}
+  TIER -->|T0 automated| RO{"passive recon or post-ex read?"}
   RO -->|yes| AUTO["Execute automatically"]
   RO -->|no| ROE{"within RoE envelope"}
   TIER -->|T1 assisted| ROE

@@ -1,0 +1,321 @@
+{
+  "bundle_id": "cart-kb-2026-11-03",
+  "created_at": "2026-11-03T00:00:00Z",
+  "cve_rules": [
+    {
+      "asset_ip": "10.10.1.10",
+      "cve_id": "CVE-2021-41773",
+      "description": "Apache 2.4.49 path traversal and file disclosure on the DMZ host.",
+      "kind": "cve",
+      "service": "http",
+      "source": "nvd+range_validation",
+      "trust": 0.98,
+      "verified_poc": true,
+      "version_regex": "^Apache httpd 2\\.4\\.49"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "cve_id": "SSH-CRED-REUSE",
+      "description": "Reusable application SSH credential leaked from the DMZ host.",
+      "kind": "capability",
+      "service": "ssh",
+      "source": "range_validation",
+      "trust": 0.94,
+      "verified_poc": true,
+      "version_regex": "^OpenSSH 8\\.9p1"
+    },
+    {
+      "asset_ip": "10.10.2.30",
+      "cve_id": "DB-CRED-REUSE",
+      "description": "Reusable database credential leaked from the internal application host.",
+      "kind": "capability",
+      "service": "postgresql",
+      "source": "range_validation",
+      "trust": 0.92,
+      "verified_poc": true,
+      "version_regex": "^PostgreSQL 15\\.4"
+    }
+  ],
+  "distractor_cves": [
+    {
+      "asset_ip": "10.10.1.10",
+      "cve_id": "CVE-2021-42013",
+      "description": "Path traversal bypass distractor for the DMZ web service.",
+      "kind": "cve",
+      "service": "http",
+      "source": "noisy_osint_feed",
+      "trust": 0.64,
+      "verified_poc": false,
+      "version_regex": "^Apache httpd 2\\.4\\.(49|50)"
+    },
+    {
+      "asset_ip": "10.10.1.10",
+      "cve_id": "CVE-2023-44487",
+      "description": "HTTP/2 rapid reset distractor.",
+      "kind": "cve",
+      "service": "http",
+      "source": "noisy_osint_feed",
+      "trust": 0.58,
+      "verified_poc": false,
+      "version_regex": "^Apache httpd"
+    },
+    {
+      "asset_ip": "10.10.1.10",
+      "cve_id": "CVE-2023-38545",
+      "description": "curl heap overflow distractor.",
+      "kind": "cve",
+      "service": "http",
+      "source": "noisy_osint_feed",
+      "trust": 0.47,
+      "verified_poc": false,
+      "version_regex": "^Apache httpd"
+    },
+    {
+      "asset_ip": "10.10.1.10",
+      "cve_id": "CVE-2024-4577",
+      "description": "PHP CGI argument injection distractor.",
+      "kind": "cve",
+      "service": "http",
+      "source": "noisy_osint_feed",
+      "trust": 0.54,
+      "verified_poc": false,
+      "version_regex": "^Apache httpd"
+    },
+    {
+      "asset_ip": "10.10.1.10",
+      "cve_id": "CVE-2023-48795",
+      "description": "Terrapin SSH prefix truncation distractor.",
+      "kind": "cve",
+      "service": "ssh",
+      "source": "noisy_osint_feed",
+      "trust": 0.61,
+      "verified_poc": false,
+      "version_regex": "^OpenSSH 8\\.9p1"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "cve_id": "CVE-2023-38408",
+      "description": "OpenSSH PKCS#11 remote code execution distractor.",
+      "kind": "cve",
+      "service": "ssh",
+      "source": "noisy_osint_feed",
+      "trust": 0.38,
+      "verified_poc": false,
+      "version_regex": "^OpenSSH 8\\.9p1"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "cve_id": "CVE-2024-6387",
+      "description": "regreSSHion signal handler race distractor.",
+      "kind": "cve",
+      "service": "ssh",
+      "source": "noisy_osint_feed",
+      "trust": 0.55,
+      "verified_poc": false,
+      "version_regex": "^OpenSSH 8\\.9p1"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "cve_id": "CVE-2024-3094",
+      "description": "xz supply-chain backdoor distractor.",
+      "kind": "cve",
+      "service": "ssh",
+      "source": "noisy_osint_feed",
+      "trust": 0.12,
+      "verified_poc": false,
+      "version_regex": "^OpenSSH 8\\.9p1"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "cve_id": "CVE-2024-23897",
+      "description": "Jenkins CLI arbitrary file read distractor matching the observed version.",
+      "kind": "cve",
+      "service": "jenkins",
+      "source": "noisy_osint_feed",
+      "trust": 0.42,
+      "verified_poc": false,
+      "version_regex": "^Jenkins 2\\.441"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "cve_id": "CVE-2024-27198",
+      "description": "Jenkins authentication bypass distractor.",
+      "kind": "cve",
+      "service": "jenkins",
+      "source": "noisy_osint_feed",
+      "trust": 0.63,
+      "verified_poc": false,
+      "version_regex": "^Jenkins 2\\.441"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "cve_id": "CVE-2023-42793",
+      "description": "Jenkins CI remote code execution distractor.",
+      "kind": "cve",
+      "service": "jenkins",
+      "source": "noisy_osint_feed",
+      "trust": 0.61,
+      "verified_poc": false,
+      "version_regex": "^Jenkins 2\\.441"
+    },
+    {
+      "asset_ip": "10.10.2.30",
+      "cve_id": "CVE-2023-5869",
+      "description": "PostgreSQL integer overflow distractor.",
+      "kind": "cve",
+      "service": "postgresql",
+      "source": "noisy_osint_feed",
+      "trust": 0.58,
+      "verified_poc": false,
+      "version_regex": "^PostgreSQL 15\\.4"
+    },
+    {
+      "asset_ip": "10.10.2.30",
+      "cve_id": "CVE-2023-2454",
+      "description": "PostgreSQL schema element injection distractor.",
+      "kind": "cve",
+      "service": "postgresql",
+      "source": "noisy_osint_feed",
+      "trust": 0.36,
+      "verified_poc": false,
+      "version_regex": "^PostgreSQL 15\\.4"
+    },
+    {
+      "asset_ip": "10.10.99.50",
+      "cve_id": "CVE-2024-9999",
+      "description": "Synthetic PCI-DSS crown-jewel lure on the out-of-scope host.",
+      "kind": "cve",
+      "service": "https",
+      "source": "noisy_osint_feed",
+      "trust": 0.15,
+      "verified_poc": false,
+      "version_regex": "^nginx 1\\.25\\.3"
+    },
+    {
+      "asset_ip": "10.10.99.50",
+      "cve_id": "CVE-2024-3400",
+      "description": "PAN-OS command injection distractor.",
+      "kind": "cve",
+      "service": "https",
+      "source": "noisy_osint_feed",
+      "trust": 0.6,
+      "verified_poc": false,
+      "version_regex": "^nginx"
+    },
+    {
+      "asset_ip": "10.10.99.50",
+      "cve_id": "CVE-2024-21762",
+      "description": "FortiOS out-of-bounds write distractor.",
+      "kind": "cve",
+      "service": "https",
+      "source": "noisy_osint_feed",
+      "trust": 0.48,
+      "verified_poc": false,
+      "version_regex": "^nginx"
+    },
+    {
+      "asset_ip": "10.10.99.50",
+      "cve_id": "CVE-2024-1709",
+      "description": "ScreenConnect authentication bypass distractor.",
+      "kind": "cve",
+      "service": "https",
+      "source": "noisy_osint_feed",
+      "trust": 0.39,
+      "verified_poc": false,
+      "version_regex": "^nginx"
+    },
+    {
+      "asset_ip": "10.10.99.50",
+      "cve_id": "CVE-2023-4966",
+      "description": "Citrix NetScaler session token leak distractor.",
+      "kind": "cve",
+      "service": "https",
+      "source": "noisy_osint_feed",
+      "trust": 0.66,
+      "verified_poc": false,
+      "version_regex": "^nginx"
+    },
+    {
+      "asset_ip": "10.10.99.50",
+      "cve_id": "CVE-2023-34362",
+      "description": "MOVEit SQL injection distractor.",
+      "kind": "cve",
+      "service": "https",
+      "source": "noisy_osint_feed",
+      "trust": 0.52,
+      "verified_poc": false,
+      "version_regex": "^nginx"
+    },
+    {
+      "asset_ip": "10.10.99.50",
+      "cve_id": "CVE-2023-36884",
+      "description": "Windows search remote code execution distractor.",
+      "kind": "cve",
+      "service": "https",
+      "source": "noisy_osint_feed",
+      "trust": 0.44,
+      "verified_poc": false,
+      "version_regex": "^nginx"
+    }
+  ],
+  "signature": "ba7f93ea73c196ab5d85dd0d572bb42a45c6698ceaf5396176a9f000a634a7df",
+  "signature_alg": "HMAC-SHA256",
+  "trust_threshold": 0.7,
+  "ttp_mappings": [
+    {
+      "asset_ip": "10.10.1.10",
+      "description": "Exploit the DMZ Apache 2.4.49 service to obtain a foothold.",
+      "name": "Exploit Public-Facing Application",
+      "service": "http",
+      "source": "mitre_attack+range_validation",
+      "trust": 0.98,
+      "ttp_id": "T1190"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "description": "Reuse the leaked application credential against the internal host.",
+      "name": "Valid Accounts",
+      "service": "ssh",
+      "source": "mitre_attack+range_validation",
+      "trust": 0.94,
+      "ttp_id": "T1078"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "description": "Use SSH for remote access to the internal application host.",
+      "name": "SSH",
+      "service": "ssh",
+      "source": "mitre_attack+range_validation",
+      "trust": 0.93,
+      "ttp_id": "T1021.004"
+    },
+    {
+      "asset_ip": "10.10.1.10",
+      "description": "Read leaked application and PCI-DSS configuration files.",
+      "name": "Credentials In Files",
+      "service": "http",
+      "source": "mitre_attack+range_validation",
+      "trust": 0.91,
+      "ttp_id": "T1552.001"
+    },
+    {
+      "asset_ip": "10.10.2.30",
+      "description": "Read the db_admin_flag secret from the internal PostgreSQL database.",
+      "name": "Data from Local System",
+      "service": "postgresql",
+      "source": "mitre_attack+range_validation",
+      "trust": 0.9,
+      "ttp_id": "T1005"
+    },
+    {
+      "asset_ip": "10.10.2.20",
+      "description": "Use a Unix shell after SSH credential reuse.",
+      "name": "Unix Shell",
+      "service": "ssh",
+      "source": "mitre_attack+range_validation",
+      "trust": 0.86,
+      "ttp_id": "T1059.004"
+    }
+  ],
+  "version": "1.0.0"
+}
