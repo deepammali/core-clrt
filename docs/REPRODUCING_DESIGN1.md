@@ -13,7 +13,7 @@ The emulated matrix is the product of:
 
 When all six models are available, the emulated matrix contains 6 × 2 × 3 × 4 = 144 campaigns. Each model/KB/scenario/control cell is run once; this is not a repeated-trial design. Each campaign has a maximum of four planner steps by default, and scenario seeds are 42, 43, and 44.
 
-The optional Docker pass uses the air-gapped knowledge base, two scenarios (`honeypot_temptation` and `broken_precondition`), and two controls (`baseline` and `T2`). With six models available, the planned pass contains up to 6 × 2 × 2 = 24 campaigns. Docker execution is only counted when the range starts and the episodes are actually recorded in the run output.
+The real Docker pass is intentionally narrower than the emulated matrix. It uses the air-gapped knowledge base, one scenario (`honeypot_temptation`), and two controls (`baseline` and `T2`). The `broken_precondition` scenario is evaluated in emulation, not in the real Docker pass. With all six configured models available, the real pass plans 6 × 1 × 2 = 12 campaigns. The runner records this design in `real.planned_episodes`, `real.scenarios`, and `real.controls`; `real.episodes` is the number actually completed and written to the log.
 
 ## Run without response memoization
 
@@ -56,9 +56,9 @@ Use unique output and summary filenames for every run. The runner truncates the 
 
 ## Interpreting partial or failed runs
 
-The summary separates emulated and real episode counts and includes a real-range error field. If Docker is unavailable, the emulated matrix may still complete while the real episode count remains zero. Such a run is not a completed mixed emulated/Docker evaluation. Report the exact count for each substrate and preserve the error message.
+The summary separates emulated and real episode counts, includes planned counts for both substrates, records the real scenario/control factors, and includes a real-range error field. If Docker is unavailable, the emulated matrix may still complete while the real episode count remains zero. Such a run is not a completed mixed emulated/Docker evaluation. Report the exact count for each substrate and preserve the error message.
 
-The Docker pass is separate from the 144-episode emulated matrix. Do not add a planned Docker count to the executed emulated count. Do not report 156 total episodes unless the raw episode log contains the corresponding 144 emulated and 12 completed real records; do not report 168 unless it contains 144 emulated and 24 completed real records.
+The Docker pass is separate from the 144-episode emulated matrix. With all six models available and successful execution, the current design plans 12 real campaigns, giving 156 campaigns across both substrates. Report the actual `emulated.episodes` and `real.episodes` values, and use the JSONL records to confirm them. Do not substitute planned campaigns for completed campaigns; when the real count is below `real.planned_episodes`, report the shortfall and inspect the real-range error and raw episode records.
 
 ## Metric denominators
 
