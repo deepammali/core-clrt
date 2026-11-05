@@ -936,6 +936,7 @@ def run_design1_experiment(
     run_real: bool = True,
     keep_range: bool = False,
     kb_modes: Sequence[str] = ("air-gapped", "online"),
+    use_cache: bool = True,
 ) -> Dict[str, Any]:
     """
     Executes the balanced Design 1 multi-model experiment:
@@ -944,7 +945,7 @@ def run_design1_experiment(
     - Evaluates both air-gapped (curated 3 rules) and online (uncurated 28 rules) KB modes.
     """
     ollama_url = os.environ.get("CART_OLLAMA_URL", DEFAULT_OLLAMA_URL)
-    cache = TurnCache(DEFAULT_CACHE_PATH)
+    cache = TurnCache(DEFAULT_CACHE_PATH) if use_cache else None
     model_specs = discover_design1_models(ollama_url=ollama_url, cache=cache)
     if not model_specs:
         raise BackendError("No Design 1 models available in Ollama.")
@@ -1087,9 +1088,11 @@ def run_design1_experiment(
         "kb_modes": list(kb_modes),
         "controls": list(CONTROLS),
         "cache_stats": {
-            "hits": cache.hits,
-            "misses": cache.misses,
-            "cache_path": str(cache.path),
+            "enabled": cache is not None,
+            "mode": "memoized" if cache is not None else "disabled",
+            "hits": cache.hits if cache is not None else 0,
+            "misses": cache.misses if cache is not None else 0,
+            "cache_path": str(cache.path) if cache is not None else None,
         },
         "system_prompt_sha256": MATRIX_SYSTEM_PROMPT_SHA256,
         "emulated": {
@@ -1346,7 +1349,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--summary", type=Path, default=DEFAULT_SUMMARY)
     parser.add_argument("--keep-range", action="store_true")
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Disable planner-response memoization for fresh Design 1 inference (requires --design1).",
+    )
     args = parser.parse_args(argv)
+
+    if args.no_cache and not args.design1:
+        parser.error("--no-cache is only supported with --design1")
 
     if args.design1:
         out_path = (
@@ -1365,6 +1376,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             max_steps=args.max_steps,
             run_real=args.real,
             keep_range=args.keep_range,
+            use_cache=not args.no_cache,
         )
         print(
             json.dumps(
