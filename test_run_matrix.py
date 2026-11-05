@@ -394,7 +394,7 @@ class TestDesign1CacheOption(unittest.TestCase):
             "run_id": "test-run",
             "models_evaluated": [],
             "emulated": {"episodes": 0},
-            "real": {"episodes": 0, "error": None},
+            "real": {"episodes": 0, "planned_episodes": 0, "error": None},
             "cache_stats": {"enabled": False, "mode": "disabled", "hits": 0, "misses": 0},
         }
 
