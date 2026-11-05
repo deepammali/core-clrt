@@ -711,3 +711,18 @@ class ActionExecutor:
 
     def __exit__(self, exc_type, exc, tb) -> None:
         self.close()
+
+def _translate_real_endpoint(target_ip: str) -> tuple[str, int]:
+    """
+    Translates internal Docker bridge IPs to host loopback bindings on Linux.
+    Maps:
+      10.10.1.10 -> (127.0.0.1, 18080) [Host A HTTP]
+      10.10.2.20 -> (127.0.0.1, 12222) [Host B SSH]
+      10.10.2.30 -> (127.0.0.1, 15432) [Host C PostgreSQL]
+    """
+    mapping = {
+        "10.10.1.10": ("127.0.0.1", 18080),
+        "10.10.2.20": ("127.0.0.1", 12222),
+        "10.10.2.30": ("127.0.0.1", 15432),
+    }
+    return mapping.get(target_ip, (target_ip, 80))
