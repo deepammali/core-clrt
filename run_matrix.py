@@ -59,6 +59,11 @@ DESIGN1_SCENARIOS = (
     "broken_precondition",
 )
 
+# The real Docker validation is intentionally narrower than the emulated matrix.
+# It exercises the honeypot scenario with baseline and T2 across available models.
+DESIGN1_REAL_SCENARIOS = ("honeypot_temptation",)
+DESIGN1_REAL_CONTROLS = ("baseline", "T2")
+
 # Unbiased Design 1 Cross-Vendor Model Roster: (tier_name, ollama_model_id, vendor_family)
 DESIGN1_MODEL_CANDIDATES: Tuple[Tuple[str, str, str], ...] = (
     ("local-small", "lfm2.5-thinking:1.2b", "Liquid-AI"),
@@ -1012,7 +1017,7 @@ def run_design1_experiment(
                     "Docker daemon is not available; start Docker Desktop and retry"
                 )
             real_range = RealRange(
-                get_scenario("honeypot_temptation"),
+                get_scenario(DESIGN1_REAL_SCENARIOS[0]),
                 keep=keep_range,
             )
             real_store = stores.get("air-gapped") or load_signed_bundle(
@@ -1028,9 +1033,7 @@ def run_design1_experiment(
                                 model_id, family
                             )
                         )
-                        for s_idx, scenario_name in enumerate(
-                            ("honeypot_temptation", "broken_precondition")
-                        ):
+                        for s_idx, scenario_name in enumerate(DESIGN1_REAL_SCENARIOS):
                             real_range.scenario = get_scenario(scenario_name)
                             plan = EpisodePlan(
                                 model=tier_name,
@@ -1039,7 +1042,7 @@ def run_design1_experiment(
                                 model_id=model_id,
                                 kb_mode="air-gapped",
                             )
-                            for control in ("baseline", "T2"):
+                            for control in DESIGN1_REAL_CONTROLS:
                                 real_counter += 1
                                 real_range.reset_state()
                                 res = run_episode(
@@ -1097,10 +1100,24 @@ def run_design1_experiment(
         "system_prompt_sha256": MATRIX_SYSTEM_PROMPT_SHA256,
         "emulated": {
             "episodes": len(emulated_results),
+            "planned_episodes": (
+                len(model_specs)
+                * len(kb_modes)
+                * len(DESIGN1_SCENARIOS)
+                * len(CONTROLS)
+            ),
             "aggregates": emulated_aggs,
         },
         "real": {
             "episodes": len(real_results),
+            "planned_episodes": (
+                len(model_specs)
+                * len(DESIGN1_REAL_SCENARIOS)
+                * len(DESIGN1_REAL_CONTROLS)
+            ),
+            "models_planned": len(model_specs),
+            "scenarios": list(DESIGN1_REAL_SCENARIOS),
+            "controls": list(DESIGN1_REAL_CONTROLS),
             "aggregates": real_aggs,
             "error": real_error,
         },
@@ -1386,6 +1403,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                     "models_evaluated": summary["models_evaluated"],
                     "emulated_episodes": summary["emulated"]["episodes"],
                     "real_episodes": summary["real"]["episodes"],
+                    "real_planned_episodes": summary["real"]["planned_episodes"],
                     "cache_stats": summary["cache_stats"],
                     "summary_path": str(sum_path),
                 },

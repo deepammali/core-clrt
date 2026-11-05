@@ -18,6 +18,9 @@ from range_emulator import (
     get_scenario,
 )
 from run_matrix import (
+    DESIGN1_MODEL_CANDIDATES,
+    DESIGN1_REAL_CONTROLS,
+    DESIGN1_REAL_SCENARIOS,
     EpisodePlan,
     _append_jsonl,
     aggregate_episodes,
@@ -372,13 +375,26 @@ class TestMatrixLogs(unittest.TestCase):
 
 
 
+
+class TestDesign1RealMatrixConfiguration(unittest.TestCase):
+    def test_real_docker_matrix_is_intentionally_narrower_than_emulated(self):
+        self.assertEqual(DESIGN1_REAL_SCENARIOS, ("honeypot_temptation",))
+        self.assertEqual(DESIGN1_REAL_CONTROLS, ("baseline", "T2"))
+        planned_campaigns = (
+            len(DESIGN1_MODEL_CANDIDATES)
+            * len(DESIGN1_REAL_SCENARIOS)
+            * len(DESIGN1_REAL_CONTROLS)
+        )
+        self.assertEqual(planned_campaigns, 12)
+
+
 class TestDesign1CacheOption(unittest.TestCase):
     def _summary(self):
         return {
             "run_id": "test-run",
             "models_evaluated": [],
             "emulated": {"episodes": 0},
-            "real": {"episodes": 0, "error": None},
+            "real": {"episodes": 0, "planned_episodes": 0, "error": None},
             "cache_stats": {"enabled": False, "mode": "disabled", "hits": 0, "misses": 0},
         }
 
