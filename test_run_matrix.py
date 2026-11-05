@@ -29,6 +29,7 @@ from run_matrix import (
     run_episode,
     run_real_matrix,
     verify_matrix_log,
+    main,
 )
 
 
@@ -368,6 +369,39 @@ class TestMatrixLogs(unittest.TestCase):
                         output_path=path,
                         run_id="real-test",
                     )
+
+
+
+class TestDesign1CacheOption(unittest.TestCase):
+    def _summary(self):
+        return {
+            "run_id": "test-run",
+            "models_evaluated": [],
+            "emulated": {"episodes": 0},
+            "real": {"episodes": 0, "error": None},
+            "cache_stats": {"enabled": False, "mode": "disabled", "hits": 0, "misses": 0},
+        }
+
+    def test_no_cache_flag_disables_design1_memoization(self):
+        with patch("run_matrix.run_design1_experiment", return_value=self._summary()) as run:
+            with patch("builtins.print"):
+                exit_code = main(["--design1", "--no-cache"])
+
+        self.assertEqual(exit_code, 0)
+        self.assertFalse(run.call_args.kwargs["use_cache"])
+
+    def test_design1_keeps_existing_cache_default(self):
+        with patch("run_matrix.run_design1_experiment", return_value=self._summary()) as run:
+            with patch("builtins.print"):
+                exit_code = main(["--design1"])
+
+        self.assertEqual(exit_code, 0)
+        self.assertTrue(run.call_args.kwargs["use_cache"])
+
+    def test_no_cache_requires_design1_mode(self):
+        with patch("builtins.print"):
+            with self.assertRaises(SystemExit):
+                main(["--no-cache"])
 
 
 if __name__ == "__main__":
